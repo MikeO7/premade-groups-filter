@@ -1,57 +1,50 @@
 # Mythic Plus Party Scout
 
-Mythic Plus Party Scout helps you limit the search results of the LFG Premade Groups tool for Mythic+ Dungeons. You can filter for groups with a specific composition of members, e.g. one tank, no heals and 3 dps. Filtering is done using a separate window next to the list of groups. Advanced users are able to enter powerful filter expressions to find exactly what they are looking for.
+**Mythic Plus Party Scout** is the ultimate tool for optimizing your Mythic+ search experience in World of Warcraft. It enhances the default LFG Premade Groups interface with powerful filtering, real-time party composition checks, and advanced logic expressions to find the perfect group in seconds.
 
-![Mythic Plus Party Scout next to the LFG Premade Groups window filtering for all mythic dungeons that still need a tank and already have a healer](Screenshots/Screenshot_01_Dungeons.png)
+![Party Scout Preview](Screenshots/Screenshot_01_Dungeons.png)
 
-Examples of what can easily be found with Mythic Plus Party Scout:
+---
 
-* Mythic dungeon groups that still need a healer
-* Mythic+ dungeon groups where the leader has a minimum rating of 2000
+### 🚀 Key Features
 
-### Standard Filters
+*   **Precision Composition Filtering**: Find groups that need *exactly* your role or have specific spots open (e.g., 1 Tank, 2 DPS, 0 Heals).
+*   **M+ Rating Integration**: Filter by leader's rating at a glance.
+*   **Party Fit Detection**: Automatically hides groups that don't have room for your entire current party.
+*   **Visual Enhancements**:
+    *   **Class Icons & Specializations**: See the exact specs of everyone in the group before applying.
+    *   **Raider.IO Support**: Color-coded ratings and detailed tooltips.
+    *   **Leader Highlights**: Easily identify the group leader.
+*   **Leaver Scouting (Coming Soon)**: Visual indicators for known leavers to protect your keys.
+*   **Advanced Logic**: Use powerful Lua expressions for complex searches (e.g., `rating > 2500 and (tanks == 0 or heals == 0)`).
 
-* Difficulty (Mythic+)
-* Mythic+ Rating
-* Number of members
-* Number of tanks, heals and DPS
-* Dungeon selection
+---
 
+### 🛠️ Advanced Filter Keywords
 
-### Advanced Expression Query Box
+Party Scout supports over 150 properties for filtering. You can mix and match standard UI filters with the **Advanced Expression Box** to fine-tune your search.
 
-* Unlimited filtering by over 150 properties ([see full list of keywords](https://github.com/0xbs/premade-groups-filter/wiki/Keywords))
-* Enter powerful logic filter expressions
-* Sort by multiple properties ascending or descending
-* Learn Lua while searching for groups
+| Keyword | Description |
+| :--- | :--- |
+| `mprating` | Leader's Mythic+ Rating |
+| `partyfit` | Has spots for your current group roles |
+| `age` | How long the group has been listed |
+| `matchingid` | Groups with the same instance lockout |
 
+---
 
-### Additional UI Enhancements
+### 📜 Attribution & License
 
-* **Class Names in Tooltip** - Shows a list of classes by role in the tooltip of a premade group.
-* **Colored Group Name** - Shows group name in green if group is new and in red if you've previously been declined. Shows activity name in red if you have a lockout on that instance.
-* **Bar in Class Color** - Shows a small bar in class color below each role in the premade dungeon group list.
-* **Show Group Leader** - Shows a small crown above the group leader's role in the premade dungeon group list.
-* **Group Leader Rating** - Shows the Mythic+ or PvP rating of the group leader in the premade group list.
-* **Rating in Raider.IO Colors** - Use the Raider.IO rating color scheme for Mythic+ ratings if the Raider.IO addon is loaded.
-* **Show Specialization** - Shows an icon with the class specialization of each member in the premade group list.
-* **Show Missing Roles** - Shows the role icon of each empty slot in the premade group list.
-* **One Click Sign Up** - Sign up for a group directly by clicking on it, instead of selecting it first, then clicking sign up.
-* **Cancel Oldest Application** - If you have the maximum number of pending applications, click on any group to cancel your oldest application first, then click again to apply.
-* **Persist Sign Up Note** - Persists the 'note to the group leader' when signing up to different groups. By default, the note is deleted when a new group is selected.
-* **Sign Up On Enter** - Automatically focus the 'note to the group leader' text box when signing up for a new group and confirm your application by pressing enter.
-* **Skip Sign Up Dialog** - Skip the role and note prompt if possible and immediately sign up to the group. Hold shift to always show the dialog.
-* **Sign up to Declined Groups** - Restore the old behavior before TWW and allow to sign up to groups that previously declined you.
+This project is a heavily modified fork of **Premade Groups Filter**, originally developed by **Bernhard Saumweber**. 
 
+**Mythic Plus Party Scout** is maintained by **MikeO**.
 
-### Resources
+Licensed under the **GNU General Public License, Version 2**.
+See the [LICENSE](LICENSE) file for the full legal text.
 
-* [Project on CurseForge](https://www.curseforge.com/wow/addons/premade-groups-filter)
-* [Project on Wago.io](https://addons.wago.io/addons/premade-groups-filter)
-* [Full List of Keywords](https://github.com/0xbs/premade-groups-filter/wiki/Keywords "Full List of Keywords")
-* [FAQ and Examples](https://github.com/0xbs/premade-groups-filter/wiki/FAQ "FAQ and Examples")
+---
 
+### 🔗 Resources
 
-### License
-
-The software is provided under the GNU General Public License, Version 2. See the `LICENSE` file for details.
+*   **GitHub**: [https://github.com/MikeO7/wow_mythic_plus_party_scout](https://github.com/MikeO7/wow_mythic_plus_party_scout)
+*   **Wiki**: [Detailed Keyword Documentation](https://github.com/MikeO7/wow_mythic_plus_party_scout/wiki)
