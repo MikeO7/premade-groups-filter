@@ -213,15 +213,6 @@ function PGFDialog:SwitchToPanel()
         self.activePanel:SetPoint("BOTTOMRIGHT", 0, 35)
     end
     self.activePanel:Show()
-    self:UpdateHeight()
-end
-
-function PGFDialog:UpdateHeight()
-    if self.activePanel and self.activePanel.GetDesiredDialogHeight then
-        self:SetHeight(self.activePanel:GetDesiredDialogHeight())
-    else
-        self:SetHeight(427)
-    end
 end
 
 function PGFDialog:GetState(id)

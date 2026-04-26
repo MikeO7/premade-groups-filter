@@ -112,8 +112,7 @@ function DungeonPanel:OnLoad()
     self:SetScript("OnEvent", self.OnEvent)
 
     self.AdvancedToggle:SetScript("OnClick", function()
-        self.state.showAdvanced = not self.state.showAdvanced
-        self:UpdateAdvancedVisibility()
+        self.AdvancedDialog:SetShown(not self.AdvancedDialog:IsShown())
     end)
 
     -- Group
@@ -127,7 +126,7 @@ function DungeonPanel:OnLoad()
     PGF.UI_SetupCheckBox(self, self.Group.BLFit, "blfit", self.groupWidth)
     PGF.UI_SetupCheckBox(self, self.Group.NeedsBL, "needsbl", self.groupWidth)
     PGF.UI_SetupCheckBox(self, self.Group.NotDeclined, "notdeclined", self.groupWidth)
-    PGF.UI_SetupAdvancedExpression(self)
+    PGF.UI_SetupAdvancedExpression(self.AdvancedDialog)
 
     -- Dungeons
     self.Dungeons.Title:SetText(L["dialog.filters.dungeons"])
@@ -252,27 +251,19 @@ function DungeonPanel:Init(state)
     for i = 1, NUM_DUNGEON_CHECKBOXES do
         self.Dungeons["Dungeon"..i].Act:SetChecked(self.state["dungeon"..i] or false)
     end
-    self.Advanced.Expression.EditBox:SetText(self.state.expression or "")
-    self:UpdateAdvancedVisibility()
+    self.AdvancedDialog.Advanced.Expression.EditBox:SetText(self.state.expression or "")
+    self:UpdateAdvancedFilterIndicator()
 end
 
 function DungeonPanel:GetDesiredDialogHeight()
-    if self.state.showAdvanced or (self.state.expression and self.state.expression ~= "") then
-        return 430
-    end
-    return 320
+    return 427
 end
 
-function DungeonPanel:UpdateAdvancedVisibility()
-    if self.state.showAdvanced or (self.state.expression and self.state.expression ~= "") then
-        self.Advanced:Show()
-        self.AdvancedToggle:Hide()
+function DungeonPanel:UpdateAdvancedFilterIndicator()
+    if self.state.expression and self.state.expression ~= "" then
+        self.AdvancedToggle:SetText("Advanced Filter (*)")
     else
-        self.Advanced:Hide()
-        self.AdvancedToggle:Show()
-    end
-    if PGF.Dialog.UpdateHeight then
-        PGF.Dialog:UpdateHeight()
+        self.AdvancedToggle:SetText("Advanced Filter")
     end
 end
 
@@ -336,7 +327,7 @@ function DungeonPanel:TriggerFilterExpressionChange()
     PGF.Logger:Debug("DungeonPanel:TriggerFilterExpressionChange")
     local expression = self:GetFilterExpression()
     local hint = expression == "true" and "" or expression
-    self.Advanced.Expression.EditBox.Instructions:SetText(hint)
+    self.AdvancedDialog.Advanced.Expression.EditBox.Instructions:SetText(hint)
     self:UpdateCheckboxVisibility()
     self:UpdateAdvancedFilters()
     PGF.Dialog:OnFilterExpressionChanged()
