@@ -283,7 +283,18 @@ hooksecurefunc("PVEFrame_ShowFrame", function (sidePanelName, selection)
     PGFDialog:Toggle()
 end)
 hooksecurefunc("GroupFinderFrame_ShowGroupFrame", function () PGFDialog:Toggle() end)
-PVEFrame:HookScript("OnShow", function () PGFDialog:Toggle() end)
+PVEFrame:HookScript("OnShow", function ()
+    if PremadeGroupsFilterSettings.defaultToPremadeDungeons then
+        if GroupFinderFrame and LFGListPVEStub then
+            PVEFrame_ShowFrame("GroupFinderFrame", LFGListPVEStub)
+            if LFGListFrame.CategorySelection then
+                LFGListCategorySelection_SelectCategory(LFGListFrame.CategorySelection, 2, 0)
+                LFGListCategorySelection_StartFindGroup(LFGListFrame.CategorySelection)
+            end
+        end
+    end
+    PGFDialog:Toggle()
+end)
 PVEFrame:HookScript("OnHide", function () PGFDialog:Toggle() end)
 
 PGFDialog:OnLoad()

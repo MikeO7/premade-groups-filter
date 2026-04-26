@@ -212,6 +212,7 @@ C.SETTINGS_DEFAULT = {
     cancelOldestApp = false,
     signUpDeclined = false,
     rioRatingColors = true,
+    defaultToPremadeDungeons = true,
 }
 
 function PGF.MigrateStateV4()

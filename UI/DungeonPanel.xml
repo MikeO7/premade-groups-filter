@@ -167,10 +167,10 @@
                     <Anchor point="TOP" relativeKey="$parent.Group" relativePoint="BOTTOMLEFT" x="240" y="-10"/>
                 </Anchors>
             </Button>
-            <Frame parentKey="AdvancedDialog" frameStrata="DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">
+            <Frame parentKey="AdvancedDialog" frameStrata="FULLSCREEN_DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">
                 <Size x="500" y="150"/>
                 <Anchors>
-                    <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER"/>
+                    <Anchor point="TOPLEFT" relativeTo="PremadeGroupsFilterDialog" relativePoint="TOPRIGHT" x="5" y="0"/>
                 </Anchors>
                 <KeyValues>
                     <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
