@@ -26,7 +26,7 @@
                         <FontString parentKey="Title" inherits="GameFontNormalLarge" justifyH="LEFT">
                             <Size y="25"/>
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="10" y="-5"/>
+                                <Anchor point="TOPLEFT" x="15" y="-5"/>
                             </Anchors>
                         </FontString>
                     </Layer>
@@ -34,47 +34,47 @@
                 <Frames>
                     <Frame parentKey="MPRating" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Title" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+                            <Anchor point="TOPLEFT" x="0" y="-35"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="Tanks" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.MPRating" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-77"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="Heals" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Tanks" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-119"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="DPS" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Heals" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-161"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="Members" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.DPS" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-203"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="Partyfit" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Members" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-245"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="BLFit" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-287"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="NeedsBL" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" x="0" y="-329"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="NotDeclined" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT" y="-84"/>
+                            <Anchor point="TOPLEFT" x="0" y="-371"/>
                         </Anchors>
                     </Frame>
                 </Frames>
@@ -89,7 +89,7 @@
                         <FontString parentKey="Title" inherits="GameFontNormalLarge" justifyH="LEFT">
                             <Size y="25"/>
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="10" y="-5"/>
+                                <Anchor point="TOPLEFT" x="15" y="-5"/>
                             </Anchors>
                         </FontString>
                     </Layer>
