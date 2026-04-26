@@ -8,27 +8,25 @@
         </Anchors>
         <Frames>
             <Frame parentKey="Group">
-                <Size x="360" y="340"/>
+                <Size x="340" y="340"/>
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="10"/>
+                    <Anchor point="TOPLEFT" x="25" y="0"/>
                 </Anchors>
                 <Layers>
                     <Layer level="BACKGROUND">
                         <Texture parentKey="Separator">
                             <Size x="1" y="320"/>
                             <Anchors>
-                                <Anchor point="RIGHT" x="10" y="-10"/>
+                                <Anchor point="TOPLEFT" x="375" y="-10" relativeTo="PremadeGroupsFilterDungeonPanel"/>
                             </Anchors>
-                            <Color r="0.5" g="0.5" b="0.5" a="0.3"/>
+                            <Color r="1" g="1" b="1" a="0.15"/>
                         </Texture>
                     </Layer>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Title" inherits="GameFontNormalLarge" justifyH="LEFT">
                             <Size y="25"/>
                             <Anchors>
-                                <Anchor point="TOP" y="-5"/>
-                                <Anchor point="LEFT" x="10"/>
-                                <Anchor point="RIGHT" x="-10"/>
+                                <Anchor point="TOPLEFT" x="5" y="-5"/>
                             </Anchors>
                         </FontString>
                     </Layer>
@@ -36,8 +34,7 @@
                 <Frames>
                     <Frame parentKey="MPRating" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOP" relativeKey="$parent.Title" relativePoint="BOTTOM"/>
-                            <Anchor point="LEFT" x="5"/>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.Title" relativePoint="BOTTOMLEFT" x="0" y="0"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="Tanks" inherits="PremadeGroupsFilterMinMaxTemplate">
@@ -83,17 +80,16 @@
                 </Frames>
             </Frame>
             <Frame parentKey="Dungeons">
-                <Size x="360" y="340"/>
+                <Size x="340" y="340"/>
                 <Anchors>
-                    <Anchor point="TOPRIGHT" x="-10"/>
+                    <Anchor point="TOPLEFT" x="385" y="0"/>
                 </Anchors>
                 <Layers>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Title" inherits="GameFontNormalLarge" justifyH="LEFT">
                             <Size y="25"/>
                             <Anchors>
-                                <Anchor point="TOP" y="-5"/>
-                                <Anchor point="LEFT" x="10"/>
+                                <Anchor point="TOPLEFT" x="5" y="-5"/>
                             </Anchors>
                         </FontString>
                     </Layer>
