@@ -331,7 +331,19 @@ function DungeonPanel:TriggerFilterExpressionChange()
     self.AdvancedDialog.Advanced.Expression.EditBox.Instructions:SetText(hint)
     self:UpdateCheckboxVisibility()
     self:UpdateAdvancedFilters()
-    PGF.Dialog:OnFilterExpressionChanged()
+
+    -- Trigger immediate local filter
+    PGF.FilterSearchResults()
+
+    -- Debounce server-side refresh
+    if self.refreshTimer then
+        self.refreshTimer:Cancel()
+    end
+    self.refreshTimer = C_Timer.NewTimer(0.5, function()
+        if LFGListFrame.SearchPanel:IsVisible() and PGF.Dialog:GetEnabled() then
+            PGF.Dialog:Refresh()
+        end
+    end)
 end
 
 function DungeonPanel:GetFilterExpression()
