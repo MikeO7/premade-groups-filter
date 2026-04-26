@@ -102,7 +102,7 @@ local DungeonPanel = CreateFrame("Frame", "PremadeGroupsFilterDungeonPanel", PGF
 function DungeonPanel:OnLoad()
     PGF.Logger:Debug("DungeonPanel:OnLoad")
     self.name = "dungeon"
-    self.dialogWidth = 480
+    self.dialogWidth = 520
     self.groupWidth = 280
     self.cmIDs = {}
 
@@ -155,9 +155,9 @@ function DungeonPanel:OnLoad()
     for i = 1, NUM_DUNGEON_CHECKBOXES do
         local dungeon = self.Dungeons["Dungeon"..i]
         dungeon.name = "..."
-        dungeon:SetWidth(165)
+        dungeon:SetWidth(200)
         dungeon.Title:SetText("...")
-        dungeon.Title:SetWidth(125)
+        dungeon.Title:SetWidth(170)
         dungeon.Act:SetScript("OnClick", function(element)
             self.state["dungeon" .. i] = element:GetChecked()
             self:TriggerFilterExpressionChange()
@@ -196,10 +196,14 @@ function DungeonPanel:InitChallengeModes()
     end)
 
     for i, cmID in ipairs(self.cmIDs) do
-        local dungeonName = C_ChallengeMode.GetMapUIInfo(cmID) or "?"
+        local dungeonName, _, _, texture = C_ChallengeMode.GetMapUIInfo(cmID)
+        if not dungeonName then dungeonName = "?" end
         local shortName = dungeonName
         for _, prefix in ipairs(stripPrefixes) do
             shortName = shortName:gsub(prefix, "", 1)
+        end
+        if texture then
+            shortName = "|T" .. texture .. ":16:16:0:0|t " .. shortName
         end
         local dungeon = self.Dungeons["Dungeon"..i]
         dungeon.cmId = cmID

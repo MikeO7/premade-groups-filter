@@ -8,7 +8,7 @@
         </Anchors>
         <Frames>
             <Frame parentKey="Group">
-                <Size x="480" y="280"/>
+                <Size x="520" y="280"/>
                 <Anchors>
                     <Anchor point="TOPLEFT"/>
                 </Anchors>
@@ -74,7 +74,7 @@
                 </Frames>
             </Frame>
             <Frame parentKey="Dungeons">
-                <Size x="180" y="280"/>
+                <Size x="230" y="280"/>
                 <Anchors>
                     <Anchor point="TOPRIGHT"/>
                 </Anchors>
@@ -171,7 +171,7 @@
                 looks like another solution, but seems to mess up the scroll state of the EditBox
                 like scroll bars are displayed forever instead of disappearing when text is removed.
                 -->
-                <Size x="480"/>
+                <Size x="520"/>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeKey="$parent.Group" relativePoint="BOTTOMLEFT"/>
                     <Anchor point="BOTTOM"/>
