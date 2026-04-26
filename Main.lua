@@ -405,6 +405,19 @@ function PGF.OnLFGListSearchEntryUpdate(self)
     local searchResultInfo = PGF.GetSearchResultInfo(self.resultID)
     if not searchResultInfo then return end
 
+    if searchResultInfo.isDelisted then
+        if not PGF.pendingFilterUpdate then
+            PGF.pendingFilterUpdate = true
+            C_Timer.After(0.1, function()
+                PGF.pendingFilterUpdate = false
+                if LFGListFrame.SearchPanel:IsVisible() then
+                    PGF.FilterSearchResults()
+                end
+            end)
+        end
+        return
+    end
+
     local activityInfo = PGF.GetActivityInfoTable(searchResultInfo.activityID)
     if activityInfo and activityInfo.isMythicPlusActivity then
         local currentName = self.ActivityName:GetText() or ""
