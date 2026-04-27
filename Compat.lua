@@ -43,9 +43,16 @@ function PGF.GetSearchResultInfo(resultID)
     return info
 end
 
-function PGF.GetActivityInfoTable(resultID)
-    -- Copy the table to avoid tainting the original Blizzard data
-    return PGF.Table_Copy_Rec(C_LFGList.GetActivityInfoTable(resultID))
+local activityInfoCache = {}
+
+function PGF.GetActivityInfoTable(activityID)
+    if not activityInfoCache[activityID] then
+        -- Copy the table to avoid tainting the original Blizzard data
+        -- activityID is bounded (e.g. static dungeon IDs), avoiding memory leaks compared to unbounded searchResultIDs
+        activityInfoCache[activityID] = PGF.Table_Copy_Rec(C_LFGList.GetActivityInfoTable(activityID))
+    end
+    -- Return a shallow copy of the cached table to prevent consumers from accidentally modifying the cache state
+    return PGF.Table_Copy_Shallow(activityInfoCache[activityID])
 end
 
 function PGF.GetSearchResultPlayerInfo(...)
