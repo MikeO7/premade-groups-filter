@@ -23,14 +23,18 @@ local L = PGF.L
 local C = PGF.C
 
 function PGF.HandleSyntaxError(error)
-    PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.syntax"], error))
+    local errorStr = tostring(error)
+    errorStr = string.gsub(errorStr, "%[string \"[^\"]+\"%]:%d+:%s*", "")
+    PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.syntax"], errorStr))
 end
 
 function PGF.HandleSemanticError(error)
-    if error and (error:find("name") or error:find("comment")) then
-        PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.semantic.protected"], error))
+    local errorStr = tostring(error)
+    errorStr = string.gsub(errorStr, "%[string \"[^\"]+\"%]:%d+:%s*", "")
+    if errorStr:find("name") or errorStr:find("comment") then
+        PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.semantic.protected"], errorStr))
     else
-        PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.semantic"], error))
+        PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.semantic"], errorStr))
     end
 end
 
