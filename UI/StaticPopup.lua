@@ -126,9 +126,12 @@ function PGFStaticPopup:Setup()
             self.EditBox:SetFocus()
             self.EditBox:HighlightText(0)
         end
-        if info.hideOnEscape then
-            self.EditBox:SetScript("OnEscapePressed", function (editBox) self:Hide() end)
-        end
+        self.EditBox:SetScript("OnEscapePressed", function (editBox)
+            editBox:ClearFocus()
+            if info.hideOnEscape then
+                self:Hide()
+            end
+        end)
         self.EditBox:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
     end
 
