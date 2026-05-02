@@ -177,20 +177,21 @@ function PGF.JaccardIndex(a, b)
     for _, w in ipairs(b) do setB[w] = true end
 
     local intersection = 0
-    local union = {}
+    local unionSize = 0
 
+    -- Performance: Calculate union size and intersection in the same loop
+    -- Avoids creating an intermediate 'union' table which causes unnecessary GC allocations
     for w in pairs(setA) do
-        union[w] = true
+        unionSize = unionSize + 1
         if setB[w] then
             intersection = intersection + 1
         end
     end
     for w in pairs(setB) do
-        union[w] = true
+        if not setA[w] then
+            unionSize = unionSize + 1
+        end
     end
-
-    local unionSize = 0
-    for _ in pairs(union) do unionSize = unionSize + 1 end
 
     if unionSize == 0 then return 0 end
     return intersection / unionSize
@@ -198,8 +199,14 @@ end
 
 local sameInstanceCache = {}
 
+-- Performance: O(1) hash map lookup is faster and avoids string allocation
+-- Note: Lua's string.match does not support regex alternation anyway, so the previous implementation was broken
+local articles = {
+    the = true, die = true, der = true, das = true,
+    il = true, el = true, la = true, le = true
+}
 local isNotArticle = function (str)
-    return str:match("^(the|die|der|das|il|el|la|le)$") == nil
+    return not articles[str]
 end
 
 -- Find out if two slightly different instance names are actually referring to the same instance.

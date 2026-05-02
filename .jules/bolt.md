@@ -8,3 +8,9 @@
 ## 2024-05-18 - Avoid Table and Metatable Allocations in Search Filters
 **Learning:** WoW add-ons heavily rely on `OnUpdate` or frequent event triggers (like LFG search updates). Re-allocating tables, metatables, or extracting static regex numbers on *every single result* during filtering causes massive unnecessary garbage collection pressure and can stutter the UI.
 **Action:** Always lift static metatables and their closures to the module scope. Use localized caches for repeated strings and pre-flatten static array loops (like keyword lookups) into single flat tables when hydrating large data structures sequentially.
+
+## 2024-05-21 - Intermediate Table Allocations and string.match limitations
+**Learning:**
+1. `JaccardIndex` calculation and similar set operations don't need intermediate table allocations to compute intersection/union counts if done correctly within the loop, reducing GC pressure during frame updates.
+2. Lua's standard `string.match` does not support regex alternation (`|`), meaning standard regex patterns like `^(the|die)$` silently fail and don't match.
+**Action:** Use O(1) hash maps for multi-string exact matching instead of `string.match` with alternations, and calculate statistics on-the-fly rather than building intermediate tables just for counts.
