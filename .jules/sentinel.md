@@ -7,3 +7,8 @@
 **Vulnerability:** Internal file paths and line numbers were exposed in UI error popups when Lua execution failed.
 **Learning:** The sanitization regex `^%[string \"[^\"]+\"%]:%d+:%s*` only hid chunk names (from `load()`), but failed to hide stack traces/paths when errors originated from internal module files like `Modules/Expression.lua:45:`. This leaks implementation details.
 **Prevention:** Use a more comprehensive non-greedy pattern like `^.-:%d+:%s*` to catch and remove all source prefixes (chunk strings or file paths) up to the line number and error message.
+
+## 2024-11-20 - [Fix DoS via Stack Overflow in Expression Parser]
+**Vulnerability:** The custom expression parser and evaluator in `Modules/Expression.lua` lacked recursion depth limits, allowing deeply nested logical expressions (e.g., `not (not (...))`) to cause a C stack overflow, crashing the host application (WoW client).
+**Learning:** In recursive descent parsers and AST evaluators in Lua, standard execution stack limitations will hard-crash the runtime environment rather than raising a catchable exception if depth isn't explicitly capped.
+**Prevention:** Implement a `depth` counter that is passed through all recursive parsing and evaluation steps, triggering an `error()` when `depth > MAX_DEPTH` (e.g., 50) to gracefully catch DoS attempts inside a `pcall`.
