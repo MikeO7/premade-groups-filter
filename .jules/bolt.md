@@ -12,3 +12,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-22 - Regex Alternation Bottleneck in Lua 5.1
+**Learning:** Lua 5.1 lacks support for standard regex alternation (the `|` operator). Attempting to use patterns like `^(the|die|der|das)$` in `string.match` silently fails and never matches, performing useless O(N) evaluations during string tokenization and causing bugs.
+**Action:** Replace `string.match` attempts using regex alternation with O(1) table lookups (hash maps) containing the exact strings as keys. This ensures correct matching behavior in Lua 5.1 and is significantly more performant, reducing execution time during heavy string parsing.
