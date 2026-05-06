@@ -7,3 +7,8 @@
 **Vulnerability:** Internal file paths and line numbers were exposed in UI error popups when Lua execution failed.
 **Learning:** The sanitization regex `^%[string \"[^\"]+\"%]:%d+:%s*` only hid chunk names (from `load()`), but failed to hide stack traces/paths when errors originated from internal module files like `Modules/Expression.lua:45:`. This leaks implementation details.
 **Prevention:** Use a more comprehensive non-greedy pattern like `^.-:%d+:%s*` to catch and remove all source prefixes (chunk strings or file paths) up to the line number and error message.
+
+## 2024-10-26 - [Fix DoS vulnerability via C stack overflow]
+**Vulnerability:** Deeply nested recursive functions (AST parsers and expression evaluators) lacked recursion depth limits, triggering C stack overflows that crashed the WoW client.
+**Learning:** WoW Addons run in a restricted environment, and deep recursion can cause hard crashes.
+**Prevention:** Always implement a recursion depth limit (e.g., maximum depth of 50) on deep AST parsers and expression evaluators to prevent Denial of Service vulnerabilities.
