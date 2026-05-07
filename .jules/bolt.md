@@ -5,6 +5,7 @@
 ## 2024-05-20 - Dynamic Lua Compilation Bottleneck in Filter Execution
 **Learning:** Calling `load()` to compile Lua strings dynamically inside high-frequency loops, such as LFG list filtering which is evaluated per-search-result, causes redundant CPU overhead and can lead to UI blocking/stuttering since the expression text usually remains constant for a given filter pass.
 **Action:** Always cache the compiled function object (e.g., via simple memoization checking the expression string) when executing dynamically provided expressions over collections.
+
 ## 2024-05-18 - Avoid Table and Metatable Allocations in Search Filters
 **Learning:** WoW add-ons heavily rely on `OnUpdate` or frequent event triggers (like LFG search updates). Re-allocating tables, metatables, or extracting static regex numbers on *every single result* during filtering causes massive unnecessary garbage collection pressure and can stutter the UI.
 **Action:** Always lift static metatables and their closures to the module scope. Use localized caches for repeated strings and pre-flatten static array loops (like keyword lookups) into single flat tables when hydrating large data structures sequentially.
@@ -12,3 +13,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-22 - Unsupported Regex Alternation and Performance in String Matching
+**Learning:** In Lua 5.1 (the environment for WoW Addons), string matching patterns do not support regex alternation (`|`). Consequently, patterns like `str:match("^(the|die)$")` silently fail to match anything. Furthermore, regex-style matching for simple exact string values is significantly slower (~2.5x slower) than direct table lookups.
+**Action:** Use O(1) table lookups (hash maps) instead of attempting alternation for multi-string exact matching. This ensures correctness (due to Lua 5.1 constraints) and provides a significant performance boost for frequently executed operations.
