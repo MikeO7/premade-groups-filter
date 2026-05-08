@@ -204,6 +204,7 @@ function PGFStaticPopup:OnShow()
 end
 
 function PGFStaticPopup:OnHide()
+    self.EditBox:ClearFocus()
     local info = PGF.StaticPopupDialogs[self.which]
     if info and info.OnHide then
         info.OnHide(self)
