@@ -132,6 +132,13 @@ end
 function PGF.NotEmpty(value) return value and value ~= "" end
 function PGF.Empty(value) return not PGF.NotEmpty(value) end
 
+function PGF.ExtractLevel(str)
+    if not str then return 0 end
+    -- Look for +N or just N
+    local level = str:match("%+(%d+)") or str:match(" (%d+)") or str:match("(%d+)")
+    return level and tonumber(level) or 0
+end
+
 local bracketPatterns = {
     "%b()", "%b[]", "%b{}", "%b<>",
     "（.-）", "【.-】", "〔.-〕", "〈.-〉", "《.-》",

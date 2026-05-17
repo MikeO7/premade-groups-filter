@@ -249,6 +249,9 @@ function PGF.DoFilterSearchResults(results)
             env.categoryid = activityInfo.categoryID
             env.groupid = activityInfo.groupFinderActivityGroupID
             env.autoinv = searchResultInfo.autoAccept
+            env.level = (searchResultInfo.mythicPlusLevel and searchResultInfo.mythicPlusLevel > 0) and searchResultInfo.mythicPlusLevel or PGF.ExtractLevel(searchResultInfo.name)
+            env.leaderlevel = searchResultInfo.leaderDungeonScoreInfo and searchResultInfo.leaderDungeonScoreInfo.bestRunLevel or 0
+            env.delisted = searchResultInfo.isDelisted
             env.questid = searchResultInfo.questID
             env.harddeclined = PGF.IsHardDeclinedGroup(searchResultInfo)
             env.softdeclined = PGF.IsSoftDeclinedGroup(searchResultInfo)
@@ -347,7 +350,7 @@ function PGF.DoFilterSearchResults(results)
                 memberCounts = memberCounts,
                 activityInfo = activityInfo,
             }
-            if PGF.DoesPassThroughFilter(env, exp) and not searchResultInfo.isDelisted then
+            if PGF.DoesPassThroughFilter(env, exp) then
                 local groupKey = PGF.GetGroupKey(searchResultInfo)
                 -- group key can be nil if falling back to leaderName, which is nil at this point if the group is new
                 if groupKey then PGF.currentSearchGroupKeys[groupKey] = true end
@@ -410,7 +413,7 @@ function PGF.ColorGroupTexts(self, searchResultInfo)
 end
 
 function PGF.OnLFGListSearchEntryUpdate(self)
-    if not PGF.Dialog:GetEnabled() then return end
+    if not PGF.Dialog or not PGF.Dialog:GetEnabled() then return end
     local searchResultInfo = PGF.GetSearchResultInfo(self.resultID)
     if not searchResultInfo then return end
 
@@ -428,7 +431,7 @@ function PGF.OnLFGListSearchEntryUpdate(self)
     end
 
     local activityInfo = PGF.GetActivityInfoTable(searchResultInfo.activityID)
-    if activityInfo and activityInfo.isMythicPlusActivity then
+    if activityInfo and activityInfo.isMythicPlusActivity and PremadeGroupsFilterSettings.cleanActivityNames then
         local currentName = self.ActivityName:GetText() or ""
         -- Strip " (Mythic Keystone)" natively regardless of localization language
         self.ActivityName:SetText(string.gsub(currentName, "%s*%(.*%)", ""))
@@ -438,7 +441,8 @@ function PGF.OnLFGListSearchEntryUpdate(self)
     PGF.AddRoleIndicators(self, searchResultInfo)
     PGF.AddRatingInfo(self, searchResultInfo)
 
-    if PremadeGroupsFilterSettings.groupAgeTimer and searchResultInfo.age and searchResultInfo.age > 0 then
+    local _, appStatus, pendingStatus = C_LFGList.GetApplicationInfo(self.resultID)
+    if PremadeGroupsFilterSettings.groupAgeTimer and searchResultInfo.age and searchResultInfo.age > 0 and appStatus == "none" and not pendingStatus then
         local ageMins = math.floor(searchResultInfo.age / 60)
         local ageStr = ""
         local colorCode = "|cff00ccff" -- Crisp Cyan (contrasts perfectly with Yellow and Green)
@@ -454,7 +458,7 @@ function PGF.OnLFGListSearchEntryUpdate(self)
         end
         local currentText = self.Playstyle:GetText() or ""
         -- Strip any previously injected age tags (handles matching multiple colors)
-        currentText = string.gsub(currentText, "^|cff%x%x%x%x%x%x%[.-%]|r ", "")
+        currentText = string.gsub(currentText, "^|cff%x%x%x%x%x%x%[.-%]|r%s*", "")
         -- Prepend the age onto the Playstyle text (e.g., "Learning", "Beat Timer")
         if currentText ~= "" then
             self.Playstyle:SetText(colorCode .. "[" .. ageStr .. "]|r " .. currentText)
@@ -475,7 +479,7 @@ end
 function PGF.FilterSearchResults()
     PGF.Logger:Debug("PGF.FilterSearchResults")
     -- exit early before tainting any variables if disabled or restricted
-    if not PGF.Dialog:GetEnabled() then return end
+    if not PGF.Dialog or not PGF.Dialog:GetEnabled() then return end
     if not PGF.currentSearchResults or #PGF.currentSearchResults == 0 then return end
 
     local copy = PGF.Table_Copy_Shallow(PGF.currentSearchResults)

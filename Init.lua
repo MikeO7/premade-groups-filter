@@ -214,6 +214,8 @@ C.SETTINGS_DEFAULT = {
     signUpDeclined = false,
     rioRatingColors = true,
     defaultToPremadeDungeons = true,
+    autoFillFilterValues = true,
+    cleanActivityNames = true,
 }
 
 function PGF.MigrateStateV4()
