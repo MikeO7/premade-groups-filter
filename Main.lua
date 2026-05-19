@@ -46,9 +46,16 @@ function PGF.ResetSearchEntries()
     end
 end
 
+PGF.cachedSortingTables = {}
+
 function PGF.GetUserSortingTable()
     local sorting = PGF.Dialog:GetSortingExpression()
     if PGF.Empty(sorting) then return {} end
+
+    if PGF.cachedSortingTables[sorting] then
+        return PGF.cachedSortingTables[sorting]
+    end
+
     -- example string:  "friends asc, age desc , bar   desc , x"
     -- resulting sortTable = {
     --     [1] = { key = "friends", order = "asc" },
@@ -59,6 +66,8 @@ function PGF.GetUserSortingTable()
     for k, v in string.gmatch(sorting, "(%w+)%s+(%w+),?") do
         table.insert(t, { key = k, order = v })
     end
+
+    PGF.cachedSortingTables[sorting] = t
     return t
 end
 
